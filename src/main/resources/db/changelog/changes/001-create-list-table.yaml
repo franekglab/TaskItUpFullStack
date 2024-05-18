@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: fglab
+      changes:
+        - createTable:
+            tableName: task_list
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: list_name
+                  type: varchar(255)
+              - column:
+                  name: list_identifier
+                  type: varchar(255)
+              - column:
+                  name: description
+                  type: varchar(255)
+              - column:
+                  name: start_date
+                  type: DATE
+              - column:
+                  name: end_date
+                  type: DATE
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
