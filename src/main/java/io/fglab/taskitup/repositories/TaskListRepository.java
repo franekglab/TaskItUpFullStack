@@ -7,5 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskListRepository extends CrudRepository<TaskList, Long> {
 
+    boolean existsByListIdentifier(String listIdentifier);
 
+    TaskList findByListIdentifier(String listId);
+
+    @Override
+    Iterable<TaskList> findAll();
 }

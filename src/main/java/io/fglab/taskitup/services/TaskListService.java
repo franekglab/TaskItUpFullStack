@@ -12,13 +12,40 @@ public class TaskListService {
     @Autowired
     private TaskListRepository taskListRepository;
 
-    public TaskList saveOrUpdateProject(TaskList taskList) {
+    public TaskList saveOrUpdateList(TaskList taskList) {
+        TaskList existingTaskList = taskListRepository.findByListIdentifier(taskList.getListIdentifier().toUpperCase());
 
-        try{
-            taskList.setListIdentifier(taskList.getListIdentifier().toUpperCase());
-            return taskListRepository.save(taskList);
-        } catch (Exception e) {
-            throw new ListIdException("List ID '"+taskList.getListIdentifier().toUpperCase()+"' already exists");
+        if (existingTaskList != null && !existingTaskList.getId().equals(taskList.getId())) {
+            throw new ListIdException("List ID '" + taskList.getListIdentifier().toUpperCase() + "' already exists");
         }
+        taskList.setListIdentifier(taskList.getListIdentifier().toUpperCase());
+        return taskListRepository.save(taskList);
+    }
+
+    public TaskList findListByIdentifier(String listId) {
+
+        TaskList taskList = taskListRepository.findByListIdentifier(listId.toUpperCase());
+
+        if(taskList == null) {
+            throw new ListIdException("List ID '" + listId +"' doesn't exist");
+
+        }
+
+        return taskList;
+    }
+
+    public Iterable<TaskList> findAllLists() {
+        return taskListRepository.findAll();
+    }
+
+    public void deleteListByIdentifier(String listId) {
+
+        TaskList taskList = findListByIdentifier(listId.toUpperCase());
+
+        if(taskList == null) {
+            throw new ListIdException("Can't delete List with ID '"+listId+"' This List doesn't exist");
+        }
+
+        taskListRepository.delete(taskList);
     }
 }

@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +28,31 @@ public class TaskListController {
     private MapValidationError mapValidationError;
 
     @PostMapping("")
-    public ResponseEntity<?> createNewProject(@Valid @RequestBody TaskList taskList, BindingResult result) {
+    public ResponseEntity<?> createNewList(@Valid @RequestBody TaskList taskList, BindingResult result) {
 
         ResponseEntity<?> errorMap = mapValidationError.MapValidationService(result);
         if(errorMap!=null) return errorMap;
 
-        TaskList newTaskList = taskListService.saveOrUpdateProject(taskList);
+        TaskList newTaskList = taskListService.saveOrUpdateList(taskList);
         return new ResponseEntity<TaskList>(newTaskList, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{listId}")
+    public ResponseEntity<?> getListByIdentifier(@PathVariable String listId) {
+
+        TaskList taskList = taskListService.findListByIdentifier(listId);
+        return new ResponseEntity<TaskList>(taskList, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public Iterable<TaskList> getAllLists() {
+        return taskListService.findAllLists();
+    }
+
+    @DeleteMapping("/{listId}")
+    public ResponseEntity<?> deleteList(@PathVariable String listId) {
+        taskListService.deleteListByIdentifier(listId);
+
+        return new ResponseEntity<String>("List with ID: "+listId+"' was deleted", HttpStatus.OK);
     }
 }
