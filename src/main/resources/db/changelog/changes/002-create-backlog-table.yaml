@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: fglab
+      changes:
+        - createTable:
+            tableName: backlog
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: tl_sequence
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: list_identifier
+                  type: VARCHAR(255)
+              - column:
+                  name: task_list_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false

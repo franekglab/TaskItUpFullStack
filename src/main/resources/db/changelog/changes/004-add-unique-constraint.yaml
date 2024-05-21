@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: fglab
+      changes:
+        - addUniqueConstraint:
+            columnNames: list_identifier
+            tableName: task_list
+            constraintName: uq_task_list_list_identifier

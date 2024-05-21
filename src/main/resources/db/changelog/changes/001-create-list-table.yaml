@@ -15,13 +15,20 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: list_name
-                  type: varchar(255)
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
               - column:
                   name: list_identifier
-                  type: varchar(255)
+                  type: VARCHAR(5)
+                  constraints:
+                    nullable: false
+                    unique: true
               - column:
                   name: description
-                  type: varchar(255)
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
               - column:
                   name: start_date
                   type: DATE

@@ -10,6 +10,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity(name = "task_list")
 public class TaskList {
 
@@ -39,73 +41,13 @@ public class TaskList {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "taskList")
+    private Backlog backlog;
+
     public TaskList() {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getListName() {
-        return listName;
-    }
-
-    public void setListName(String listName) {
-        this.listName = listName;
-    }
-
-    public String getListIdentifier() {
-        return listIdentifier;
-    }
-
-    public void setListIdentifier(String listIdentifier) {
-        this.listIdentifier = listIdentifier;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
-    }
-
-    public Date getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
-    }
-
-    public Date getCreated_At() {
-        return created_At;
-    }
-
-    public void setCreated_At(Date created_At) {
-        this.created_At = created_At;
-    }
-
-    public Date getUpdated_At() {
-        return updated_At;
-    }
-
-    public void setUpdated_At(Date updated_At) {
-        this.updated_At = updated_At;
-    }
 
     @PrePersist
     protected void onCreate() {
