@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity(name = "backlog")
@@ -16,14 +19,13 @@ public class Backlog {
     private Integer tlSequence = 0;
     private String listIdentifier;
 
-    //One to one with tasklist
-
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "taskList_id", nullable = false)
     @JsonIgnore
     private TaskList taskList;
 
-    //One to many tasks under list
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "backlog")
+    private List<Task> tasks = new ArrayList<>();
 
     public Backlog() {
 
