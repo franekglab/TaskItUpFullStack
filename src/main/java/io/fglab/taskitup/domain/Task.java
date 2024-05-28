@@ -17,8 +17,8 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(updatable = false)
-    private String taskSequence;
+    @Column(updatable = false, unique = true)
+    private String listSequence;
     @NotBlank(message = "Please include a task summary")
     private String summary;
     private String acceptanceCriteria;
@@ -26,7 +26,7 @@ public class Task {
     private Integer priority;
     private Date dueDate;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
     @JsonIgnore
     private Backlog backlog;
@@ -55,7 +55,7 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "id=" + id +
-                ", taskSequence='" + taskSequence + '\'' +
+                ", listSequence='" + listSequence + '\'' +
                 ", summary='" + summary + '\'' +
                 ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
                 ", status='" + status + '\'' +

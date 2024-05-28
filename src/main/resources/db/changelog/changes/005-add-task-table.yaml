@@ -14,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: task_sequence
+                  name: list_sequence
                   type: VARCHAR(255)
                   constraints:
                     nullable: false

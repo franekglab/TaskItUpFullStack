@@ -17,4 +17,10 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         ListIdExceptionResponse exceptionResponse = new ListIdExceptionResponse(ex.getMessage());
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleListNotFoundException(ListNotFoundException ex, WebRequest request) {
+        ListNotFoundExceptionResponse exceptionResponse = new ListNotFoundExceptionResponse(ex.getMessage());
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }

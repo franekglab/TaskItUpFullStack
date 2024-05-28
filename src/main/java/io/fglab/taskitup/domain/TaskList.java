@@ -1,6 +1,7 @@
 package io.fglab.taskitup.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotBlank;
@@ -42,6 +43,7 @@ public class TaskList {
     private Date updated_At;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "taskList")
+    @JsonIgnore
     private Backlog backlog;
 
     public TaskList() {
