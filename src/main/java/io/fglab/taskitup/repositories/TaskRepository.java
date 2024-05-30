@@ -10,4 +10,6 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     List<Task> findByListIdentifierOrderByPriority(String id);
 
     Task findByListSequence(String sequence);
+
+
 }

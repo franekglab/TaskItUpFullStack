@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface BacklogRepository extends CrudRepository<Backlog, Long> {
 
     Backlog findByListIdentifier(String Identifier);
+
 }
