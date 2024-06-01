@@ -32,10 +32,6 @@ databaseChangeLog:
               - column:
                   name: create_at
                   type: DATE
-                  constraints:
-                    nullable: true
               - column:
                   name: update_at
                   type: DATE
-                  constraints:
-                    nullable: true

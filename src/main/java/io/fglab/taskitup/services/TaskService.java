@@ -25,56 +25,49 @@ public class TaskService {
     @Autowired
     private TaskListRepository taskListRepository;
 
-    public Task addTask(String listIdentifier, Task task) {
+    @Autowired
+    private TaskListService taskListService;
 
-        try {
-            Backlog backlog = backlogRepository.findByListIdentifier(listIdentifier);
+    public Task addTask(String listIdentifier, Task task, String username) {
 
-            task.setBacklog(backlog);
+        Backlog backlog = taskListService.findListByIdentifier(listIdentifier, username).getBacklog();
 
-            Integer BacklogSequence = backlog.getTlSequence();
+        task.setBacklog(backlog);
 
-            BacklogSequence++;
+        Integer BacklogSequence = backlog.getTlSequence();
 
-            backlog.setTlSequence(BacklogSequence);
+        BacklogSequence++;
 
-            task.setListSequence(backlog.getListIdentifier() + "-" + BacklogSequence);
-            task.setListIdentifier(listIdentifier);
+        backlog.setTlSequence(BacklogSequence);
 
-            if (task.getPriority() == null) {
-                task.setPriority(3);
-            }
+        task.setListSequence(backlog.getListIdentifier() + "-" + BacklogSequence);
+        task.setListIdentifier(listIdentifier);
 
-            if (task.getStatus() == "" || task.getStatus() == null) {
-                task.setStatus("TO_DO");
-            }
-
-            return taskRepository.save(task);
-        } catch (Exception e) {
-            throw new ListNotFoundException("List not found");
+        if (task.getPriority() == null || task.getPriority() == 0) {
+            task.setPriority(3);
         }
+
+        if (task.getStatus() == "" || task.getStatus() == null) {
+            task.setStatus("TO_DO");
+        }
+
+        return taskRepository.save(task);
 
     }
 
-    public Iterable<Task> findBacklogById(String id) {
+    public Iterable<Task> findBacklogById(String id, String username) {
 
-        TaskList taskList = taskListRepository.findByListIdentifier(id);
-
-        if (taskList == null) {
-            throw new ListNotFoundException("List with ID: " + id + " doesn't exist");
-        }
+        taskListService.findListByIdentifier(id, username);
 
         return taskRepository.findByListIdentifierOrderByPriority(id);
     }
 
-    public Task findTLByListSequence(String backlog_id, String tl_id) {
+    public Task findTLByListSequence(String backlog_id, String tl_id, String username) {
 
         //sprawdza czy lista istnieje
-        Backlog backlog = backlogRepository.findByListIdentifier(backlog_id);
+        taskListService.findListByIdentifier(backlog_id, username);
 
-        if (backlog == null) {
-            throw new ListNotFoundException("List with ID: " + backlog_id + " doesn't exist");
-        }
+
 
         //sprawdza czy task istnieje
         Task task = taskRepository.findByListSequence(tl_id);
@@ -92,16 +85,16 @@ public class TaskService {
         return task;
     }
 
-    public Task updateByListSequence(Task updatedTask, String backlog_id, String tl_id) {
-        Task task = findTLByListSequence(backlog_id, tl_id);
+    public Task updateByListSequence(Task updatedTask, String backlog_id, String tl_id, String username) {
+        Task task = findTLByListSequence(backlog_id, tl_id, username);
 
         task = updatedTask;
 
         return taskRepository.save(task);
     }
 
-    public void deleteTLByListSequence(String backlog_id, String tl_id) {
-        Task task = findTLByListSequence(backlog_id, tl_id);
+    public void deleteTLByListSequence(String backlog_id, String tl_id, String username) {
+        Task task = findTLByListSequence(backlog_id, tl_id, username);
 
         taskRepository.delete(task);
     }

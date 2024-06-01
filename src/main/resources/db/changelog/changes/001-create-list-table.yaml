@@ -41,3 +41,11 @@ databaseChangeLog:
               - column:
                   name: updated_at
                   type: DATE
+              - column:
+                  name: list_owner
+                  type: varchar(255)
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
