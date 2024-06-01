@@ -13,4 +13,7 @@ public interface TaskListRepository extends CrudRepository<TaskList, Long> {
 
     @Override
     Iterable<TaskList> findAll();
+
+    Iterable<TaskList> findAllByListOwner(String username);
+
 }

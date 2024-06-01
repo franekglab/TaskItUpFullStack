@@ -46,6 +46,12 @@ public class TaskList {
     @JsonIgnore
     private Backlog backlog;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
+
+    private String listOwner;
+
     public TaskList() {
 
     }

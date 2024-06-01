@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: fglab
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: task_list
+            baseColumnNames: user_id
+            constraintName: fk_task_list_user
+            referencedTableName: app_user
+            referencedColumnNames: id
+            onDelete: CASCADE
