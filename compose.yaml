@@ -3,7 +3,7 @@ services:
     image: 'postgres:latest'
     environment:
       - 'POSTGRES_DB=taskitup'
-      - 'POSTGRES_PASSWORD=Uzumymv1!'
-      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=login'
     ports:
       - '5432:5432'
